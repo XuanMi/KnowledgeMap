@@ -8,30 +8,26 @@ LOAD CSV WITH HEADERS  FROM "file:///hudong_pedia2.csv" AS line
 CREATE (p:HudongItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
 
-//删除重复节点：
-
+//删除重复节点：                                                                                  
 MATCH (e:HudongItem{title:'93'}) delete e	依次删除：'93','2','65',20','23','63','3','25','7','4'	重复10次
 
 
-// 创建索引
-
+// 创建索引                                                                                          
 CREATE CONSTRAINT ON (c:HudongItem)
 ASSERT c.title IS UNIQUE
 
 
-// 导入新的节点
-
+// 导入新的节点                                                                                        
 LOAD CSV WITH HEADERS FROM "file:///new_node.csv" AS line
 CREATE (:NewNode { title: line.title })
 
 
-//添加索引
-
+//添加索引                                                                                            
 CREATE CONSTRAINT ON (c:NewNode)
 ASSERT c.title IS UNIQUE
 
 
-//导入植物节点
+//导入植物节点                                                                                              
 LOAD CSV WITH HEADERS  FROM "file:///plantAll.csv" AS line  
 CREATE (p:PlantItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
