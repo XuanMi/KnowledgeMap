@@ -50,21 +50,13 @@ CREATE (entity1)-[:RELATION { type: line.relation }]->(entity2)
 
 //导入植物和病害的中文（病害）关系：关系全但是不准
 LOAD CSV  WITH HEADERS FROM "file:///plant_Disease_realation.csv" AS line
-
-
 MATCH (entity1:HudongItem{title:line.HudongItem1}) , (entity2:HudongItem{title:line.HudongItem2})
-
-
 CREATE (entity1)-[:RELATION { type: line.relation }]->(entity2)
 
 
 //导入植物和病害的英文（illness）关系：关系准但是不全
 LOAD CSV  WITH HEADERS FROM "file:///illnessRealation.csv" AS line
-
-
 MATCH (entity1:HudongItem{title:line.HudongItem1}) , (entity2:HudongItem{title:line.HudongItem2})
-
-
 CREATE (entity1)-[:RELATION { type: line.relation }]->(entity2)
 
 
