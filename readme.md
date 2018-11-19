@@ -1,9 +1,9 @@
-// 将hudong_pedia.csv 导入
+// 将hudong_pedia.csv 导入                                                                                                   
 LOAD CSV WITH HEADERS  FROM "file:///hudong_pedia.csv" AS line  
 CREATE (p:HudongItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
 
-// 新增了hudong_pedia2.csv
+// 新增了hudong_pedia2.csv                                                                                              
 LOAD CSV WITH HEADERS  FROM "file:///hudong_pedia2.csv" AS line  
 CREATE (p:HudongItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
