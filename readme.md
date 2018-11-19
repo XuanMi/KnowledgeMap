@@ -9,20 +9,24 @@ CREATE (p:HudongItem{title:line.title,image:line.image,detail:line.detail,url:li
 
 
 //删除重复节点：
+
 MATCH (e:HudongItem{title:'93'}) delete e	依次删除：'93','2','65',20','23','63','3','25','7','4'	重复10次
 
 
 // 创建索引
+
 CREATE CONSTRAINT ON (c:HudongItem)
 ASSERT c.title IS UNIQUE
 
 
 // 导入新的节点
+
 LOAD CSV WITH HEADERS FROM "file:///new_node.csv" AS line
 CREATE (:NewNode { title: line.title })
 
 
 //添加索引
+
 CREATE CONSTRAINT ON (c:NewNode)
 ASSERT c.title IS UNIQUE
 
