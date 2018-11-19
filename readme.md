@@ -1,70 +1,89 @@
-// ½«hudong_pedia.csv µ¼Èë
+// å°†hudong_pedia.csv å¯¼å…¥
 LOAD CSV WITH HEADERS  FROM "file:///hudong_pedia.csv" AS line  
 CREATE (p:HudongItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
-// ÐÂÔöÁËhudong_pedia2.csv
+
+// æ–°å¢žäº†hudong_pedia2.csv
 LOAD CSV WITH HEADERS  FROM "file:///hudong_pedia2.csv" AS line  
 CREATE (p:HudongItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
-//É¾³ýÖØ¸´½Úµã£º
-MATCH (e:HudongItem{title:'93'}) delete e	ÒÀ´ÎÉ¾³ý£º'93','2','65',20','23','63','3','25','7','4'	ÖØ¸´10´Î
 
-// ´´½¨Ë÷Òý
+//åˆ é™¤é‡å¤èŠ‚ç‚¹ï¼š
+MATCH (e:HudongItem{title:'93'}) delete e	ä¾æ¬¡åˆ é™¤ï¼š'93','2','65',20','23','63','3','25','7','4'	é‡å¤10æ¬¡
+
+
+// åˆ›å»ºç´¢å¼•
 CREATE CONSTRAINT ON (c:HudongItem)
 ASSERT c.title IS UNIQUE
 
-// µ¼ÈëÐÂµÄ½Úµã
+
+// å¯¼å…¥æ–°çš„èŠ‚ç‚¹
 LOAD CSV WITH HEADERS FROM "file:///new_node.csv" AS line
 CREATE (:NewNode { title: line.title })
 
-//Ìí¼ÓË÷Òý
+
+//æ·»åŠ ç´¢å¼•
 CREATE CONSTRAINT ON (c:NewNode)
 ASSERT c.title IS UNIQUE
 
-//µ¼ÈëÖ²Îï½Úµã
+
+//å¯¼å…¥æ¤ç‰©èŠ‚ç‚¹
 LOAD CSV WITH HEADERS  FROM "file:///plantAll.csv" AS line  
 CREATE (p:PlantItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
-//µ¼Èë²¡º¦½Úµã
+
+//å¯¼å…¥ç—…å®³èŠ‚ç‚¹
 LOAD CSV WITH HEADERS  FROM "file:///disAll.csv" AS line  
 CREATE (p:DiseaseItem{title:line.title,image:line.image,detail:line.detail,url:line.url,openTypeList:line.openTypeList,baseInfoKeyList:line.baseInfoKeyList,baseInfoValueList:line.baseInfoValueList,InfoKeyList:line.InfoKeyList,InfoValueList:line.InfoValueList}) 
 
-//µ¼ÈëhudongItemºÍÐÂ¼ÓÈë½ÚµãÖ®¼äµÄ¹ØÏµ
+
+//å¯¼å…¥hudongItemå’Œæ–°åŠ å…¥èŠ‚ç‚¹ä¹‹é—´çš„å…³ç³»
 LOAD CSV  WITH HEADERS FROM "file:///wikidata_relation2.csv" AS line
 MATCH (entity1:HudongItem{title:line.HudongItem}) , (entity2:NewNode{title:line.NewNode})
 CREATE (entity1)-[:RELATION { type: line.relation }]->(entity2)
+
 
 LOAD CSV  WITH HEADERS FROM "file:///wikidata_relation.csv" AS line
 MATCH (entity1:HudongItem{title:line.HudongItem1}) , (entity2:HudongItem{title:line.HudongItem2})
 CREATE (entity1)-[:RELATION { type: line.relation }]->(entity2)
 
-//µ¼ÈëÖ²ÎïºÍ²¡º¦µÄÖÐÎÄ£¨²¡º¦£©¹ØÏµ£º¹ØÏµÈ«µ«ÊÇ²»×¼
+
+//å¯¼å…¥æ¤ç‰©å’Œç—…å®³çš„ä¸­æ–‡ï¼ˆç—…å®³ï¼‰å…³ç³»ï¼šå…³ç³»å…¨ä½†æ˜¯ä¸å‡†
 LOAD CSV  WITH HEADERS FROM "file:///plant_Disease_realation.csv" AS line
 
+
 MATCH (entity1:HudongItem{title:line.HudongItem1}) , (entity2:HudongItem{title:line.HudongItem2})
+
 
 CREATE (entity1)-[:RELATION { type: line.relation }]->(entity2)
 
-//µ¼ÈëÖ²ÎïºÍ²¡º¦µÄÓ¢ÎÄ£¨illness£©¹ØÏµ£º¹ØÏµ×¼µ«ÊÇ²»È«
+
+//å¯¼å…¥æ¤ç‰©å’Œç—…å®³çš„è‹±æ–‡ï¼ˆillnessï¼‰å…³ç³»ï¼šå…³ç³»å‡†ä½†æ˜¯ä¸å…¨
 LOAD CSV  WITH HEADERS FROM "file:///illnessRealation.csv" AS line
 
+
 MATCH (entity1:HudongItem{title:line.HudongItem1}) , (entity2:HudongItem{title:line.HudongItem2})
+
 
 CREATE (entity1)-[:RELATION { type: line.relation }]->(entity2)
 
-//½«attributes.csv·Åµ½neo4jµÄimportÄ¿Â¼ÏÂ£¬È»ºóÖ´ÐÐ
+
+//å°†attributes.csvæ”¾åˆ°neo4jçš„importç›®å½•ä¸‹ï¼Œç„¶åŽæ‰§è¡Œ
 LOAD CSV WITH HEADERS FROM "file:///attributes.csv" AS line
 MATCH (entity1:HudongItem{title:line.Entity}), (entity2:HudongItem{title:line.Attribute})
 CREATE (entity1)-[:RELATION { type: line.AttributeName }]->(entity2);
-                                                            
+ 
+ 
 LOAD CSV WITH HEADERS FROM "file:///attributes.csv" AS line
 MATCH (entity1:HudongItem{title:line.Entity}), (entity2:NewNode{title:line.Attribute})
 CREATE (entity1)-[:RELATION { type: line.AttributeName }]->(entity2);
-                                                            
+    
+    
 LOAD CSV WITH HEADERS FROM "file:///attributes.csv" AS line
 MATCH (entity1:NewNode{title:line.Entity}), (entity2:NewNode{title:line.Attribute})
 CREATE (entity1)-[:RELATION { type: line.AttributeName }]->(entity2);
-                                                            
+   
+   
 LOAD CSV WITH HEADERS FROM "file:///attributes.csv" AS line
 MATCH (entity1:NewNode{title:line.Entity}), (entity2:HudongItem{title:line.Attribute})
 CREATE (entity1)-[:RELATION { type: line.AttributeName }]->(entity2)  
